@@ -34,6 +34,7 @@ import { version } from '../version';
 import { i18n } from '../i18next';
 
 interface NavbarState {
+  isMobile: boolean;
   isLoggedIn: boolean;
   expanded: boolean;
   replies: Array<Comment>;
@@ -48,6 +49,7 @@ export class Navbar extends Component<any, NavbarState> {
   private wsSub: Subscription;
   private userSub: Subscription;
   emptyState: NavbarState = {
+    isMobile: window.innerWidth <= 500,
     isLoggedIn: UserService.Instance.user !== undefined,
     unreadCount: 0,
     replies: [],
@@ -90,12 +92,21 @@ export class Navbar extends Component<any, NavbarState> {
   }
 
   render() {
-    return this.navbar();
+    return this.state.isMobile ? this.navbar_mobile() : this.navbar();
+  }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleResize.bind(this));
   }
 
   componentWillUnmount() {
     this.wsSub.unsubscribe();
     this.userSub.unsubscribe();
+    window.removeEventListener('resize', this.handleResize.bind(this));
+  }
+
+  handleResize() {
+    this.setState({ isMobile: window.innerWidth <= 500 });
   }
 
   // TODO class active corresponding to current page
@@ -246,6 +257,10 @@ export class Navbar extends Component<any, NavbarState> {
     );
   }
 
+  navbar_mobile() {
+    return <nav></nav>;
+  }
+
   expandNavbar(i: Navbar) {
     i.state.expanded = !i.state.expanded;
     i.setState(i.state);
@@ -381,7 +396,7 @@ export class Navbar extends Component<any, NavbarState> {
 
   requestNotificationPermission() {
     if (UserService.Instance.user) {
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', function () {
         if (!Notification) {
           toast(i18n.t('notifications_error'), 'danger');
           return;
