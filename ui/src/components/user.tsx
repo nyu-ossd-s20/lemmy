@@ -408,6 +408,15 @@ export class User extends Component<any, UserState> {
               </ul>
             </h5>
             <div>
+              <span>Cakeday: </span>
+              <span>
+                <svg class="icon">
+                  <use xlinkHref="#icon-cake"></use>
+                </svg>
+                <MomentTime data={user} showCakeDay />
+              </span>
+            </div>
+            <div>
               {i18n.t('joined')} <MomentTime data={user} showAgo />
             </div>
             <div class="table-responsive mt-1">
@@ -455,8 +464,9 @@ export class User extends Component<any, UserState> {
             ) : (
               <>
                 <a
-                  className={`btn btn-block btn-secondary mt-3 ${!this.state
-                    .user.matrix_user_id && 'disabled'}`}
+                  className={`btn btn-block btn-secondary mt-3 ${
+                    !this.state.user.matrix_user_id && 'disabled'
+                  }`}
                   target="_blank"
                   href={`https://matrix.to/#/${this.state.user.matrix_user_id}`}
                 >

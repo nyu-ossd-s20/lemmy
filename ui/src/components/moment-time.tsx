@@ -10,6 +10,7 @@ interface MomentTimeProps {
     updated?: string;
   };
   showAgo?: boolean;
+  showCakeDay?: boolean;
 }
 
 export class MomentTime extends Component<MomentTimeProps, any> {
@@ -22,7 +23,13 @@ export class MomentTime extends Component<MomentTimeProps, any> {
   }
 
   render() {
-    if (this.props.data.updated) {
+    if (this.props.showCakeDay) {
+      console.log(this.props.data);
+      let str = this.props.data.published || this.props.data.when_;
+      return (
+        <span className="pointer unselectable"> {this.getCakeDay(str)}</span>
+      );
+    } else if (this.props.data.updated) {
       return (
         <span
           data-tippy-content={`${capitalizeFirstLetter(
@@ -50,9 +57,10 @@ export class MomentTime extends Component<MomentTimeProps, any> {
   }
 
   format(input: string): string {
-    return moment
-      .utc(input)
-      .local()
-      .format('LLLL');
+    return moment.utc(input).local().format('LLLL');
+  }
+
+  getCakeDay(input: string): string {
+    return moment.utc(input).local().format('LL');
   }
 }

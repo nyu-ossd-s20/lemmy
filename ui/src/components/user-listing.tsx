@@ -19,6 +19,7 @@ export class UserListing extends Component<UserListingProps, any> {
 
   render() {
     let user = this.props.user;
+
     return (
       <Link className="text-body font-weight-bold" to={`/u/${user.name}`}>
         {user.avatar && showAvatars() && (
@@ -29,7 +30,11 @@ export class UserListing extends Component<UserListingProps, any> {
             class="rounded-circle mr-2"
           />
         )}
-        <span>{user.name}</span>
+        <span>{user.name} </span>
+
+        <svg class="icon">
+          <use xlinkHref="#icon-cake"></use>
+        </svg>
       </Link>
     );
   }
