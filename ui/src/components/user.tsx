@@ -455,8 +455,9 @@ export class User extends Component<any, UserState> {
             ) : (
               <>
                 <a
-                  className={`btn btn-block btn-secondary mt-3 ${!this.state
-                    .user.matrix_user_id && 'disabled'}`}
+                  className={`btn btn-block btn-secondary mt-3 ${
+                    !this.state.user.matrix_user_id && 'disabled'
+                  }`}
                   target="_blank"
                   href={`https://matrix.to/#/${this.state.user.matrix_user_id}`}
                 >
@@ -613,6 +614,7 @@ export class User extends Component<any, UserState> {
                       this,
                       this.handleUserSettingsNewPasswordChange
                     )}
+                    autoComplete="new-password"
                   />
                 </div>
               </div>

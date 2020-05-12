@@ -190,6 +190,7 @@ export class Login extends Component<any, State> {
               onInput={linkEvent(this, this.handleRegisterPasswordChange)}
               class="form-control"
               required
+              autoComplete="new-password"
             />
           </div>
         </div>
